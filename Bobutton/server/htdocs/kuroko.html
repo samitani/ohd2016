@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>DEBUG</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0,minimal-ui">
+
+  <!-- Fav and touch icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="img/apple-touch-icon-144-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" href="img/apple-touch-icon-57-precomposed.png">
+  
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+  <link rel="stylesheet" href="/css/main.css">
+
+  <script src="js/socket.io.js"></script>
+
+  <script>
+  </script>
+  <style>
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+  <div class="row">
+      <div class="col-xs-12">
+      <form action="/api/button" method="GET">
+        wear_id:
+        <input type="radio" name="wear_id" value="1">1
+        <input type="radio" name="wear_id" value="2">2
+        <br>
+        button_1:
+        <input type="radio" name="button_1" value="0">0
+        <input type="radio" name="button_1" value="1">1
+        <br>
+        button_2:
+        <input type="radio" name="button_2" value="0">0
+        <input type="radio" name="button_2" value="1">1
+        <br>
+        button_3:
+        <input type="radio" name="button_3" value="0">0
+        <input type="radio" name="button_3" value="1">1
+        <br>
+        <input type="submit">
+      </form>
+      </div>
+  </div>
+</div>
+</body>
+</html>
+

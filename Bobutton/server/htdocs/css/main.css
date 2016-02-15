@@ -1,0 +1,251 @@
+body {
+  /*background-image: url("/img/background.jpg");
+  background-repeat: repeat;*/
+}
+
+.closet-hr {
+  border-style: dashed;
+  border-color: hotpink;
+  border-width: thin;
+}
+
+.close-img {
+  max-width: 100%;
+  max-height: 140px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.app-header {
+	background: #e2b9ff;
+	text-align: center;
+}
+.app-header .header-logo {
+	width: 60%;
+}
+.app-subheader {
+	padding :20px;
+	background-image: url("/img/sakura.png");
+}
+.app-subheader .wear-image {
+	width: 30%;
+	position: relative;
+	left: 10%;
+	border-radius: 4px;
+	border: white 2px solid;
+}
+.app-subheader .title-message {
+	position: absolute;
+    font-size: 2.0em;
+    left: 40%;
+    top: 130px;
+    font-weight: lighter;
+	text-align : left;
+}
+
+.app-content-closet {
+	
+}
+.app-content-closet h3 {
+	margin-left: 10px;
+}
+.app-content-closet .closet-wears {
+	padding: 5px;
+	width: 100%;
+}
+.app-content-closet .close-img {
+	padding-left: 2px;
+	padding-right: 2px;
+	border-radius : 6px;
+}
+.app-content-closet .wear-counter {
+	width: 80%;
+    height: 10px;
+    position: absolute;
+    height: 20px;
+    opacity: 0.8;
+    bottom: 0px;
+}
+
+
+#myModal {
+	width: 95%;
+	top: 10%;
+}
+#myModal .iketeru-wear {
+	width: 90%;
+}
+#myModal .button-status-on {
+	width: 30px;
+	height: 30px;
+	background-image: url("/img/button_on_clear.png");
+    background-repeat: repeat;
+	background-size:contain;
+}
+#myModal .button-status-off {
+	width: 30px;
+	height: 30px;
+	background-image: url("/img/button_off_clear.png");
+	background-repeat: repeat;
+	background-size:contain;
+}
+#myModal .wear-1 .button-no-1 {
+    position: absolute;
+    top: 30%;
+    left: 35%;
+}
+#myModal .wear-1 .button-no-2 {
+    position: absolute;
+    top: 55%;
+    left: 32%;
+}
+#myModal .wear-1 .button-no-3 {
+    position: absolute;
+    top: 80%;
+    left: 28%;
+}
+#myModal .wear-1 .button-status-border {
+	background-image: url("/img/border.png");
+	background-repeat: no-repeat;
+	background-size: contain;
+	width: 150px;
+	height: 100px;
+}
+#myModal .wear-1 .button-status-border.button-no-1 {
+    left: 40%;
+}
+#myModal .wear-1 .button-status-border.button-no-2 {
+    left: 37%;
+}
+#myModal .wear-1 .button-status-border.button-no-3 {
+    left: 33%;
+}
+#myModal .wear-1 .button-status-border span {
+    margin-left: 25px;
+    top: -20px;
+    position: relative;
+	color: #0C3688;
+	text-shadow: 5px 5px 1px #999999;
+}
+#myModal .wear-1 .iketeru-wear {
+	background-image: url("/img/IMG_3534.jpg");
+	background-repeat: no-repeat;
+	background-size: contain;
+	height: 400px;
+	left: 10%;
+	position: relative;
+}
+
+
+#myModal .wear-2 .button-no-1 {
+    position: absolute;
+	top: 33%;
+	left: 27%;
+}
+#myModal .wear-2 .button-no-2 {
+    position: absolute;
+	top: 58%;
+	left: 20%;
+}
+#myModal .wear-2 .button-no-3 {
+    position: absolute;
+    top: 80%;
+	left: 14%;
+}
+#myModal .wear-2 .button-status-border {
+	background-image: url("/img/border.png");
+	background-repeat: no-repeat;
+	background-size: contain;
+	width: 150px;
+	height: 100px;
+}
+#myModal .wear-2 .button-status-border.button-no-1 {
+    left: 32%;
+}
+#myModal .wear-2 .button-status-border.button-no-2 {
+    left: 25%;
+}
+#myModal .wear-2 .button-status-border.button-no-3 {
+    left: 19%;
+}
+#myModal .wear-2 .button-status-border span {
+    margin-left: 25px;
+    top: -20px;
+    position: relative;
+	color: #578AEF;
+	text-shadow: 5px 5px 1px #191919;
+}
+#myModal .wear-2 .iketeru-wear {
+	background-image: url("/img/Deco2.jpg");
+	background-repeat: no-repeat;
+	background-size: contain;
+	height: 400px;
+	left: 10%;
+	position: relative;
+}
+
+.overlay-background {
+	width:100%;
+	height:1000px;
+	background:rgba(0,0,0,0.2);
+	top: 0px;
+	position: absolute;
+	display: none;
+}
+.alert-box {
+    position: absolute;
+    z-index: 2000;
+    top: 40%;
+	text-align: center;
+	display:none;
+	width: 100%;
+}
+.alert-box.bounceIn {
+	display:block;
+}
+.alert-box img {
+	border-radius: 4px;
+	padding: 10px;
+}
+.alert-box button {
+    width: 40%;
+}
+.alert-box-auction {
+    position: absolute;
+    z-index: 2000;
+    top: 5%;
+    width: 95%;
+    left: 2%;
+	text-align: center;
+	display:none;
+}
+.alert-box-auction.bounceIn {
+	display:block;
+}
+.alert-box-auction img {
+	border-radius: 4px;
+	padding: 10px;
+}
+.alert-box-auction button {
+    width: 50%;
+}
+
+.alert-box-totalwear {
+    position: absolute;
+    z-index: 2000;
+    top: 40%;
+	text-align: center;
+	display:none;
+	width: 100%;
+}
+.alert-box-totalwear.bounceIn {
+	display:block;
+}
+.alert-box-totalwear img {
+	border-radius: 4px;
+	padding: 10px;
+}
+.alert-box-totalwear button {
+    width: 40%;
+}

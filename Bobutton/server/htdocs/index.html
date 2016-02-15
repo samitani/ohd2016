@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>クローゼット</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0,minimal-ui">
+
+  <!-- Fav and touch icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="img/apple-touch-icon-144-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" href="img/apple-touch-icon-57-precomposed.png">
+  
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+  
+  <link rel="stylesheet" href="css/animate.css" type="text/css" media="screen">
+  <link rel="stylesheet" href="/css/main.css">
+
+  <script src="js/socket.io.js"></script>
+
+  <script>
+  $(document).ready(function(){
+    $("#audio-gokon").load();
+    $("#audio-ittera").load();
+  });
+
+  function getNow()
+  {
+    date = new Date();
+    return [
+        date.getHours(),
+        date.getMinutes(),
+        date.getSeconds()
+        ].join( ':' );
+  }
+
+  auction = function() {
+    $('.alert-box-totalwear').addClass('bounceOut').removeClass('bounceIn');
+    $('.overlay-background').show();
+	$('.alert-box-auction').addClass('bounceIn').removeClass('bounceOut');
+  }
+
+  var played = 0;
+  $(function() {
+    last_button_count = 0;
+
+    var socket = io.connect();
+    socket.on('connect', function(msg) {
+    });
+
+	socket.on('count_recv', function(msg) {
+        $(".wear-counter").each(function(index, elm) {
+          var wear_id = $(elm).attr('wear-id');
+          var progress_class = 'progress-bar-danger';
+
+          if (wear_id == 1 ||
+              wear_id == 2) {
+              if (msg[wear_id]['button_1'] == 1) {
+	              btn = $('.wear-' + wear_id).find('.button-no-1.button-status');
+	              btn_border = $('.wear-' + wear_id).find('.button-no-1.button-status-border');
+                  $(btn).removeClass('button-status-off');
+                  $(btn).addClass('button-status-on');
+                  $(btn_border).html('<span>Open ' + getNow() +'</span>')
+              }
+              if (msg[wear_id]['button_2'] == 1) {
+	              btn = $('.wear-' + wear_id).find('.button-no-2.button-status');
+	              btn_border = $('.wear-' + wear_id).find('.button-no-2.button-status-border');
+                  $(btn).removeClass('button-status-off');
+                  $(btn).addClass('button-status-on');
+                  $(btn_border).html('<span>Open ' + getNow() +'</span>')
+              }
+              if (msg[wear_id]['button_3'] == 1) {
+	              btn = $('.wear-' + wear_id).find('.button-no-3.button-status');
+	              btn_border = $('.wear-' + wear_id).find('.button-no-3.button-status-border');
+                  $(btn).removeClass('button-status-off');
+                  $(btn).addClass('button-status-on');
+                  $(btn_border).html('<span>Open ' + getNow() +'</span>')
+              }
+              if (msg[wear_id]['button_1'] == 0) {
+	              btn = $('.wear-' + wear_id).find('.button-no-1.button-status');
+	              btn_border = $('.wear-' + wear_id).find('.button-no-1.button-status-border');
+                  $(btn).addClass('button-status-off');
+                  $(btn).removeClass('button-status-on');
+                  $(btn_border).html('<span>Close</span>')
+              }
+              if (msg[wear_id]['button_2'] == 0) {
+	              btn = $('.wear-' + wear_id).find('.button-no-2.button-status');
+	              btn_border = $('.wear-' + wear_id).find('.button-no-2.button-status-border');
+                  $(btn).addClass('button-status-off');
+                  $(btn).removeClass('button-status-on');
+                  $(btn_border).html('<span>Close</span>')
+              }
+              if (msg[wear_id]['button_3'] == 0) {
+	              btn = $('.wear-' + wear_id).find('.button-no-3.button-status');
+	              btn_border = $('.wear-' + wear_id).find('.button-no-3.button-status-border');
+                  $(btn).addClass('button-status-off');
+                  $(btn).removeClass('button-status-on');
+                  $(btn_border).html('<span>Close</span>')
+              }
+
+          }
+
+          // ボタンをとめた
+          if (
+               typeof(msg[wear_id]['button_1']) != undefined && msg[wear_id]['button_1'] == 1 ||
+               typeof(msg[wear_id]['button_1']) != undefined && msg[wear_id]['button_2'] == 1 ||
+               typeof(msg[wear_id]['button_1']) != undefined && msg[wear_id]['button_3'] == 1
+             ) {
+
+            button_count = msg[wear_id]['button_1'] + msg[wear_id]['button_2']  + msg[wear_id]['button_3'];
+            if (last_button_count < button_count) {
+			    if(wear_id == 1){
+			        $('.wear-2').hide();
+			        $('.wear-1').show();
+			    	// iketenai
+			    	$('#iketeru-wear').attr('src', 'img/IMG_3534.jpg');
+                    if (!played) {
+		                $('.overlay-background').show();
+		                $('.alert-box').addClass('bounceIn').removeClass('bounceOut');
+                        document.getElementById("audio-gokon").play();
+                        played = 1;
+                    }
+			        $('#myModal').modal('show');
+			    } else if(wear_id == 2){
+			        $('.wear-1').hide();
+			        $('.wear-2').show();
+			    	// iketeru
+			    	$('#iketeru-wear').attr('src', 'img/IMG_3540.jpg');
+			        $('#myModal').modal('show');
+			    }
+            }
+            last_button_count = msg[wear_id]['button_1'] + msg[wear_id]['button_2']  + msg[wear_id]['button_3'];
+          }
+
+          // 脱いだ
+          if (
+               typeof(msg[wear_id]['trigger_off']) != undefined && msg[wear_id]['trigger_off'] == 1
+              ) {
+              last_button_count = 0;
+		      $('.overlay-background').hide();
+		      $('.alert-box').addClass('bounceOut').removeClass('bounceIn');
+		      $('#myModal').modal('hide');
+          }
+
+          // 着た
+          if (
+               typeof(msg[wear_id]['trigger_on']) != undefined && msg[wear_id]['trigger_on'] == 1
+              ) {
+		      $('#myModal').modal('hide');
+		      $('.overlay-background').hide();
+		      $('.alert-box').addClass('bounceOut').removeClass('bounceIn');
+              if (wear_id == 2) {
+                    document.getElementById("audio-ittera").play();
+                    $('#alert-totalwear-num').html(msg[2]['count_on']);
+		            $('.overlay-background').show();
+		            $('.alert-box-totalwear').addClass('bounceIn').removeClass('bounceOut');
+                    setInterval(auction, 3000);
+              }
+          }
+
+
+		  /** alert 
+		  */
+		  
+          count = msg[wear_id]['count_on'];
+
+          if (count > 7) {
+            progress_class = 'progress-bar-sucess';
+          } else if (count > 4) {
+            progress_class = 'progress-bar-warn';
+          } else {
+            progress_class = 'progress-bar-danger';
+          }
+
+          $(elm).removeClass('progress-bar-danger');
+          $(elm).removeClass('progress-bar-success');
+          $(elm).removeClass('progress-bar-warn');
+          $(elm).addClass(progress_class);
+          $(elm).css('width', (count * 10/2) + '%');
+          $(elm).html('<span style="color:white;">' + count + '回</span>');
+        });
+        console.log(msg);
+    });
+  });
+  
+  </script>
+  <style>
+  </style>
+</head>
+
+<body>
+
+<audio id="audio-gokon" src="video/no-gokon.m4a">
+</audio>
+
+<audio id="audio-ittera" src="video/ittera.m4a">
+</audio>
+
+<div class="container">
+  <div class="row">
+
+    <div class="row app-header">
+		<div class="row">
+            <div class="col-xs-12">
+             <img class="header-logo" src="img/LogoTitle.png"/>
+            </div>
+		</div>
+	</div>
+	<div class="row app-subheader">
+		<div class="row">
+			<div class="sub-header-overlay">
+			<img src="img/img091128104019_p.jpg" class="wear-image" alt="Img091128104019 P">
+			<span class="title-message">いい服着よう。<br/>今日こそは</span>
+		</div>
+		</div>
+    </div>
+	<div class="row app-content-closet">
+		<div class="col-xs-12">
+			<div class="row">
+				<div class="col-xs-12">
+				<h3>あなたが好きな服</h3>
+				</div>
+			</div>
+			<div class="row wear">
+				<div class="col-xs-4">
+					<img src="img/IMG_3534.jpg" class="close-img">
+					
+	  	            <div class="progress-bar progress-bar-sucess wear-counter" role="progressbar" aria-valuenow="0"
+	  	          aria-valuemin="0" aria-valuemax="100" styel="width: 90%" wear-id="1">
+			      <span style="color:white;">18回</span></div>
+				</div>
+				<div class="col-xs-4">
+					<img src="img/IMG_3540.jpg" class="close-img">
+  	  	            <div class="progress-bar progress-bar-sucess wear-counter" role="progressbar" aria-valuenow="0"
+  	  	          aria-valuemin="0" aria-valuemax="100" style="width:90%" wear-id="2">
+  			      <span style="color:white;">12回</span></div>
+				</div>
+				<div class="col-xs-4">
+					<img src="img/IMG_3537.jpg" class="close-img">
+  	  	            <div class="progress-bar progress-bar-success wear-counter" role="progressbar" aria-valuenow="0"
+  	  	          aria-valuemin="0" aria-valuemax="100" style="width:0%" wear-id="3">
+  			      <span style="color:white;">8回</span></div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12">
+				<h3>売っちゃう候補</h3>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-4">
+					<img src="img/IMG_3538.jpg" class="closet-wears" alt="IMG 3534">
+    	  	            <div class="progress-bar progress-bar-danger wear-counter" role="progressbar" aria-valuenow="0"
+    	  	          aria-valuemin="0" aria-valuemax="100" style="width:0px" wear-id="4">
+    			      <span style="color:black;">0回</span></div>
+				</div>
+				<div class="col-xs-4">
+					<img src="img/IMG_3535.jpg" class="closet-wears" alt="IMG 3534">
+    	  	            <div class="progress-bar progress-bar-danger wear-counter" role="progressbar" aria-valuenow="0"
+    	  	          aria-valuemin="0" aria-valuemax="100" style="width:10px" wear-id="5">
+    			      <span style="color:black;">1回</span></div>
+				</div>
+				<div class="col-xs-4">
+					<img src="img/IMG_3536.jpg" class="closet-wears" alt="IMG 3534">
+    	  	            <div class="progress-bar progress-bar-danger wear-counter" role="progressbar" aria-valuenow="0"
+    	  	          aria-valuemin="0" aria-valuemax="100" style="width:20px" wear-id="6">
+    			      <span style="color:black;">2回</span></div>
+				</div>
+			</div>
+		</div>
+    </div>
+    
+  </div>
+</div>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">着ようとしてる服</h4>
+      </div>
+      <div class="modal-body wear-1">
+        <div class="iketeru-wear"></div>
+		<div class="button-status">
+			<div class="button-image button-no-1 button-status button-status-on"></div>
+			<div class="button-image button-no-1 button-status-border"><span>Open @ 23:42:33</span></div>
+			<div class="button-image button-no-2 button-status button-status-off"></div>
+			<div class="button-image button-no-2 button-status-border"><span>Close</span></div>
+			<div class="button-image button-no-3 button-status button-status-off"></div>
+			<div class="button-image button-no-3 button-status-border"><span>Close</span></div>
+		</div>
+      </div>
+      <div class="modal-body wear-2">
+        <div class="iketeru-wear"></div>
+		<div class="button-status">
+			<div class="button-image button-no-1 button-status button-status-on"></div>
+			<div class="button-image button-no-1 button-status-border"><span>Open @ 23:42:33</span></div>
+			<div class="button-image button-no-2 button-status button-status-off"></div>
+			<div class="button-image button-no-2 button-status-border"><span>Close</span></div>
+			<div class="button-image button-no-3 button-status button-status-off"></div>
+			<div class="button-image button-no-3 button-status-border"><span>Close</span></div>
+		</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="overlay-background"></div>
+
+<div class="alert-box animated">
+<div class="alert alert-danger alert-dismissible fade in" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+	<h2>その服は前回の合コンで失敗していますよ<br/>それでも着ますか？</h2>
+	<!--<p>この服は前回の合コンで失敗した服であると記録されており、BOBUTTON(C)では これによってもたらされる結果に対して一切の責任を負えませんのでご了承ください。それでも着ていくなら、とめません。</p> -->
+	<p> <button type="button" class="btn btn-danger" data-dismiss="alert">ああ、行くさ</button>
+		<button type="button" class="btn btn-default" data-dismiss="alert">やっぱ、やめる</button>
+	</p></div>
+</div>
+
+<div class="alert-box-totalwear animated">
+<div class="alert alert-success alert-dismissible fade in" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+	<h3>いってらっしゃい</h3>
+	<p>いま着た服はこれまでに <span id="alert-totalwear-num">-</span>回 着ました</p>
+</p></div>
+</div>
+
+<div class="alert-box-auction animated">
+<div class="alert alert-info alert-dismissible fade in" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+	<h2>オークションへ出品♪</h2>
+	<p>この服はほとんど着ていないので、売っちゃいます。</p>
+	<img src="img/IMG_3538.jpg" style="width:80%" alt="" />
+	<p> <button type="button" class="btn btn-danger" data-dismiss="alert">はい</button>
+	</p></div>
+</div>
+
+</body>
+</html>
+
